@@ -18,11 +18,9 @@ function AddUser() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location.state)
   useEffect(() => {
     if(!location.state?.createUser) {
       getUserById(location.state.id).then(response => {
-        console.log('res', response)
         if (response.data.status === 'success') {
           const { user } = response.data;
           setFirstName(user.firstName);
@@ -55,7 +53,6 @@ function AddUser() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log({firstName, lastName, email, birthDate, address});
     if (validateEmptyFields()) {
       try {
         if (location.state?.createUser) {
