@@ -114,26 +114,44 @@ function AddUser() {
     }
   }
 
+  const inputsData = [
+    {
+      label: 'Nombre:',
+      type: "text",
+      value: firstName,
+      setValue: setFirstName
+    },
+    {
+      label: 'Apellido:',
+      type: "text",
+      value: lastName,
+      setValue: setLastName
+    },
+    {
+      label: 'Email:',
+      type: "email",
+      value: email,
+      setValue: setEmail
+    },
+    {
+      label: 'Fecha de nacimiento:',
+      type: "date",
+      value: birthDate,
+      setValue: setBirthDate
+    }
+  ];
+
+
   return (
     <Main>
       <Form onSubmit={handleSubmit}>
         <h3>Datos de usuario</h3>
-        <InputContainer>
-          <Label>Nombre:</Label><br></br>
-          <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-        </InputContainer>
-        <InputContainer>
-          <Label>Apellido:</Label><br></br>
-          <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-        </InputContainer>
-        <InputContainer>
-          <Label>Email:</Label><br></br>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </InputContainer>
-        <InputContainer>
-          <Label>Fecha de nacimiento:</Label><br></br>
-          <Input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
-        </InputContainer>
+        {inputsData.map((inputData, i) => (
+          <InputContainer key={i}>
+            <Label>{inputData.label}</Label><br></br>
+            <Input type={inputData.type} value={inputData.value} onChange={(e) => inputData.setValue(e.target.value)} />
+          </InputContainer>
+        ))}
         <h3>Dirección</h3>
         <InputContainer>
           <Label>Calle:</Label><br></br>
@@ -151,6 +169,7 @@ function AddUser() {
           <Label>Código postal:</Label><br></br>
           <Input type="text" value={address.postalcode} onChange={(e) => setAddress({...address, postalcode: e.target.value})} />
         </InputContainer>
+
         <ButtonsContainer>
           <CancellButton onClick={() => navigate('/')}>Cancelar</CancellButton>
           <Button type="submit">{location.state?.createUser ? 'Agregar' : 'Guardar cambios'}</Button>
