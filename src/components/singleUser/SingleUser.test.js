@@ -20,5 +20,5 @@ describe(SingleUser, () => {
     const { getByRole } = render(<SingleUser user={mockUser} handleDeleteUser={() => {}}/>);
     const showAddressBttn = getByRole("button", {name: 'Ver dirección'}); 
   });
-
+  
 })
