@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Main, Title, Button } from './Navbar.styles';
+import { Main, Title } from './Navbar.styles';
+import { Button } from '@mui/material';
 
 function Navbar() {
 
@@ -8,7 +9,7 @@ function Navbar() {
   return (
     <Main>
       <Title onClick={() => navigate('/')}>Ninja Users</Title>
-      <Button onClick={() => navigate('/')}>Ver usuarios</Button>
+      <Button onClick={() => navigate('/')} variant="outlined" color="secondary">Ver usuarios</Button>
     </Main>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { ListItem, Text, ColumnData, ButtonsColumn, Button, TopContainer, BottomContainer, AddressData } from "./SingleUser.styles";
+import { ListItem, Text, ColumnData, ButtonsColumn, TopContainer, BottomContainer, AddressData } from "./SingleUser.styles";
+import { Button } from '@mui/material';
 
 function SingleUser({user, handleDeleteUser}) {
   const [showAddress, setShowAddress] = useState(false);
@@ -18,9 +19,33 @@ function SingleUser({user, handleDeleteUser}) {
           <Text><strong>Fecha de nacimiento:</strong> {user.birthDate}</Text>
         </ColumnData>
         <ButtonsColumn>
-          <Button onClick={() => navigate('/add-user', {state: {createUser: false, id: user._id }})}>Editar</Button>
-          <Button onClick={() => handleDeleteUser(user._id)}>Eliminar</Button>
-          <Button onClick={() => setShowAddress(!showAddress)}>{showAddress ? 'Ocultar Dirección' : 'Ver dirección'}</Button>
+          <Button 
+            onClick={() => navigate('/add-user', {state: {createUser: false, id: user._id }})} 
+            variant="outlined" 
+            color="primary" 
+            size="small" 
+            style={{width: '130px', margin: '3px 0'}}
+          >
+            Editar
+          </Button>
+          <Button 
+            onClick={() => handleDeleteUser(user._id)}
+            variant="outlined" 
+            color="primary" 
+            size="small" 
+            style={{width: '130px', margin: '3px 0'}}
+          >
+            Eliminar
+          </Button>
+          <Button 
+            onClick={() => setShowAddress(!showAddress)}
+            variant="outlined" 
+            color="primary" 
+            size="small" 
+            style={{width: '130px', margin: '3px 0'}}
+          >
+            {showAddress ? 'Ocultar Dirección' : 'Ver dirección'}
+          </Button>
         </ButtonsColumn>
       </TopContainer>
 

@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { createUser, getUserById, updateUser } from '../../services';
-import { Main, Form, InputContainer, Label, Input, ButtonsContainer, Button, CancellButton } from './AddUser.styles';
+import { Main, Form, InputContainer, Label, Input, ButtonsContainer } from './AddUser.styles';
+import { Button } from '@mui/material'
+import Loading from '../loading/Loading';
 
 function AddUser() {
+  const [isLoading, setIsLoading] = useState(true);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -33,6 +36,7 @@ function AddUser() {
             country: user.address.country,
             postalcode: user.address.postalcode
           });
+          setIsLoading(false);
         }
       })
     }
@@ -47,33 +51,41 @@ function AddUser() {
         country: "",
         postalcode: ""
       });
+      setIsLoading(false)
     }
 
   }, []);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    setIsLoading(true)
     if (validateEmptyFields()) {
       try {
         if (location.state?.createUser) {
           const response = await createUser({firstName, lastName, email, birthDate, address});
           if (response.data.status === 'success') {
             navigate('/');
+            setIsLoading(false)
           } else {
             alert('Ha ocurrido un error.')
+            setIsLoading(false)
           }
         } else {
           const response = await updateUser(location.state.id, {firstName, lastName, email, birthDate, address});
           if (response.data.status === 'success') {
             navigate('/');
+            setIsLoading(false)
           } else {
             alert('Ha ocurrido un error.')
+            setIsLoading(false)
           }
         }
       } catch (err) {
         alert('Ha ocurrido un error.')
+        setIsLoading(false)
       } 
     } else {
+      setIsLoading(false)
       return;
     }
   };
@@ -141,6 +153,8 @@ function AddUser() {
     }
   ];
 
+  if (isLoading) return <Loading/>
+
   return (
     <Main>
       <Form onSubmit={handleSubmit}>
@@ -170,8 +184,8 @@ function AddUser() {
         </InputContainer>
 
         <ButtonsContainer>
-          <CancellButton onClick={() => navigate('/')}>Cancelar</CancellButton>
-          <Button type="submit">{location.state?.createUser ? 'Agregar' : 'Guardar cambios'}</Button>
+          <Button onClick={() => navigate('/')} variant="outlined" color="primary">Cancelar</Button>
+          <Button type="submit"  variant="contained" color="primary" sx={{ ml: '10px' }}>{location.state?.createUser ? 'Agregar' : 'Guardar cambios'}</Button>
         </ButtonsContainer>
       </Form>
     </Main>

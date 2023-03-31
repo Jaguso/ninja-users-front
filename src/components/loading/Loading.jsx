@@ -1,10 +1,10 @@
 import { Main } from "./Loading.styles";
-
+import { CircularProgress } from "@mui/material";
 
 function Loading() {
   return (
     <Main>
-      <span>Loading ...</span>
+      <CircularProgress />
     </Main>
   );
 }

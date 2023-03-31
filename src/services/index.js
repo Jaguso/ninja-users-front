@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'https://ninja-users-backend.herokuapp.com/api';
+const URL = process.env.REACT_APP_API_URL;
 
 const getAllUsers = () => axios.get(`${URL}/users`);
 
